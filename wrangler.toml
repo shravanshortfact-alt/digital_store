@@ -1,0 +1,13 @@
+#:schema node_modules/wrangler/config-schema.json
+name = "digital-product-selling-website"
+compatibility_date = "2024-04-03"
+compatibility_flags = [ "nodejs_compat" ]
+pages_build_output_dir = ".vercel/output/static"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "shravan-store"
+database_id = "df585d2d-61cb-479f-b850-bf3f6ba5afb9"
+
+[vars]
+RESEND_API_KEY = "re_7TeoxbAF_FH5r2nduzQnGuVGqGXSzEQat"
