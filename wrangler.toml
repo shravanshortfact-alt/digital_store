@@ -8,6 +8,3 @@ pages_build_output_dir = ".vercel/output/static"
 binding = "DB"
 database_name = "shravan-store"
 database_id = "df585d2d-61cb-479f-b850-bf3f6ba5afb9"
-
-[vars]
-RESEND_API_KEY = "re_7TeoxbAF_FH5r2nduzQnGuVGqGXSzEQat"

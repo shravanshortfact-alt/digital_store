@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "node scripts/patch-next-async-hooks.mjs",
+    "prebuild": "node scripts/patch-next-async-hooks.mjs",
+    "pages:build": "npx @cloudflare/next-on-pages@1 && node scripts/patch-next-async-hooks.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
