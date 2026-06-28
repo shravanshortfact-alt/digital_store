@@ -1,8 +1,23 @@
 import { config } from "./config";
 
-export async function callSmmApi(action: string, params: Record<string, any> = {}) {
-  const apiKey = config.smmApiKey;
-  const apiUrl = config.smmApiUrl;
+export type SmmEnv = {
+  SMM_API_KEY?: string;
+  SMM_API_URL?: string;
+};
+
+function getSmmConfig(env?: SmmEnv) {
+  const apiKey = env?.SMM_API_KEY || config.smmApiKey;
+  const apiUrl = env?.SMM_API_URL || config.smmApiUrl;
+
+  if (!apiKey) {
+    throw new Error("SMM_API_KEY is not configured.");
+  }
+
+  return { apiKey, apiUrl };
+}
+
+export async function callSmmApi(action: string, params: Record<string, any> = {}, env?: SmmEnv) {
+  const { apiKey, apiUrl } = getSmmConfig(env);
 
   const bodyParams = new URLSearchParams();
   bodyParams.append("key", apiKey);
@@ -30,16 +45,16 @@ export async function callSmmApi(action: string, params: Record<string, any> = {
   return data;
 }
 
-export async function getSmmBalance() {
-  const result = await callSmmApi("balance");
+export async function getSmmBalance(env?: SmmEnv) {
+  const result = await callSmmApi("balance", {}, env);
   if (result && result.error) {
     throw new Error(result.error);
   }
   return result as { balance: string; currency: string };
 }
 
-export async function getSmmServices() {
-  const result = await callSmmApi("services");
+export async function getSmmServices(env?: SmmEnv) {
+  const result = await callSmmApi("services", {}, env);
   if (result && result.error) {
     throw new Error(result.error);
   }
@@ -58,20 +73,20 @@ export async function getSmmServices() {
   }>;
 }
 
-export async function placeSmmOrder(serviceId: number, link: string, quantity: number) {
+export async function placeSmmOrder(serviceId: number, link: string, quantity: number, env?: SmmEnv) {
   const result = await callSmmApi("add", {
     service: serviceId,
     link,
     quantity,
-  });
+  }, env);
   if (result && result.error) {
     throw new Error(result.error);
   }
   return result as { order: number };
 }
 
-export async function getSmmOrderStatus(orderId: number) {
-  const result = await callSmmApi("status", { order: orderId });
+export async function getSmmOrderStatus(orderId: number, env?: SmmEnv) {
+  const result = await callSmmApi("status", { order: orderId }, env);
   if (result && result.error) {
     throw new Error(result.error);
   }
@@ -84,8 +99,8 @@ export async function getSmmOrderStatus(orderId: number) {
   };
 }
 
-export async function cancelSmmOrder(orderId: number) {
-  const result = await callSmmApi("cancel", { order: orderId });
+export async function cancelSmmOrder(orderId: number, env?: SmmEnv) {
+  const result = await callSmmApi("cancel", { order: orderId }, env);
   if (result && result.error) {
     throw new Error(result.error);
   }

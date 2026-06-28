@@ -20,14 +20,15 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const action = searchParams.get("action");
     const db = context.env.DB;
+    const env = context.env;
 
     if (action === "balance") {
-      const balance = await getSmmBalance();
+      const balance = await getSmmBalance(env);
       return Response.json(balance);
     }
 
     if (action === "services") {
-      const services = await getSmmServices();
+      const services = await getSmmServices(env);
       return Response.json(services);
     }
 
@@ -51,7 +52,7 @@ export async function GET(request: Request) {
       }
 
       try {
-        const orderStatus = await getSmmOrderStatus(tx.smm_order_id);
+        const orderStatus = await getSmmOrderStatus(tx.smm_order_id, env);
         const status = orderStatus.status || "Unknown";
         
         await db
@@ -92,6 +93,7 @@ export async function POST(request: Request) {
     }
 
     const { action, transaction_id, quantity } = (await request.json()) as { action?: string; transaction_id?: string; quantity?: number };
+    const env = context.env;
 
     if (action === "retry") {
       if (!transaction_id) {
@@ -142,7 +144,7 @@ export async function POST(request: Request) {
       const link = tx.instagram_link || "";
 
       try {
-        const orderResult = await placeSmmOrder(tx.smm_service_id, link, qty);
+        const orderResult = await placeSmmOrder(tx.smm_service_id, link, qty, env);
         if (orderResult && orderResult.order) {
           const orderId = orderResult.order;
           

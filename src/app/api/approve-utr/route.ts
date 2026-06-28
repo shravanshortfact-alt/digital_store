@@ -47,6 +47,7 @@ export async function POST(request: Request) {
     }
 
     const db = context.env.DB;
+    const env = context.env;
 
     // Fetch the target transaction details joined with product details
     const transaction = await db
@@ -101,7 +102,8 @@ export async function POST(request: Request) {
             const orderResult = await placeSmmOrder(
               transaction.smm_service_id,
               transaction.instagram_link || "",
-              totalQty
+              totalQty,
+              env
             );
             if (orderResult && orderResult.order) {
               smmOrderId = orderResult.order;
