@@ -29,7 +29,27 @@ export async function GET(request: Request) {
 
     if (action === "services") {
       const services = await getSmmServices(env);
-      return Response.json(services);
+      const instagramServices = services
+        .filter((service) => {
+          const category = (service.category || "").toLowerCase();
+          const name = (service.name || "").toLowerCase();
+          return category.includes("instagram") || name.includes("instagram");
+        })
+        .slice(0, 500)
+        .map((service) => ({
+          service: service.service,
+          name: service.name,
+          rate: service.rate,
+          min: service.min,
+          max: service.max,
+          category: service.category,
+          type: service.type,
+          dripfeed: service.dripfeed,
+          refill: service.refill,
+          cancel: service.cancel,
+        }));
+
+      return Response.json(instagramServices);
     }
 
     if (action === "sync-order") {

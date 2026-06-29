@@ -433,8 +433,15 @@ export default function AdminDashboard() {
         const data = await response.json();
         setSmmServices(data || []);
       } else {
-        const errData = await response.json();
-        setError(errData.error || "Failed to fetch SMM services list.");
+        const text = await response.text();
+        let message = "Failed to fetch SMM services list.";
+        try {
+          const errData = JSON.parse(text);
+          message = errData.error || message;
+        } catch {
+          message = text || message;
+        }
+        setError(message);
       }
     } catch (err) {
       console.error(err);
