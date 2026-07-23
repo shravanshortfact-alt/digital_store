@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import "./page.css";
 
@@ -101,7 +101,7 @@ export default function Home() {
 
   return (
     <div className="animate-fade-in">
-      <header className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 12px", borderBottom: "1px solid var(--glass-border)" }}>
+      <header className="container" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px 0", borderBottom: "1px solid var(--glass-border)", flexWrap: "wrap", gap: "16px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <div style={{ fontWeight: 800, fontSize: "22px", background: "linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
             {settings.website_name}
@@ -115,7 +115,7 @@ export default function Home() {
  
       <main>
         {/* Hero Section */}
-        <section className="container hero" style={{ padding: "80px 0 0 0" }}>
+        <section className="container hero">
           <div className="hero-badge">
             Creator Marketplace 🚀
           </div>
@@ -136,7 +136,7 @@ export default function Home() {
         <section id="catalog" className="container" style={{ padding: "20px 0 30px 0" }}>
           
           {loading ? (
-            <div style={{ display: "flex", justifyContent: "center", padding: "80px" }}>
+            <div style={{ display: "flex", justifyContent: "center", padding: "32px" }}>
               <div style={{ width: "32px", height: "32px", border: "3px solid var(--accent-light)", borderTopColor: "var(--accent-primary)", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
               <style jsx>{`
                 @keyframes spin {
@@ -156,15 +156,16 @@ export default function Home() {
                 </p>
 
                 {/* Tabs selection */}
-                <div style={{ display: "flex", justifyContent: "center", gap: "12px", marginBottom: "32px", width: "100%", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", justifyContent: "center", gap: "8px", marginBottom: "32px", width: "100%", flexWrap: "nowrap", overflowX: "auto", paddingBottom: "4px" }}>
                   <button 
                     onClick={() => setActiveInstaTab("followers")}
                     className={`tab-btn ${activeInstaTab === "followers" ? "active" : ""}`}
                     style={{ 
                       display: "flex", 
                       alignItems: "center", 
-                      gap: "8px", 
-                      padding: "12px 24px", 
+                      gap: "6px", 
+                      padding: "10px 16px", 
+                      flexShrink: 0, 
                       borderRadius: "999px", 
                       fontSize: "14px",
                       fontWeight: 600, 
@@ -184,8 +185,9 @@ export default function Home() {
                     style={{ 
                       display: "flex", 
                       alignItems: "center", 
-                      gap: "8px", 
-                      padding: "12px 24px", 
+                      gap: "6px", 
+                      padding: "10px 16px", 
+                      flexShrink: 0, 
                       borderRadius: "999px", 
                       fontSize: "14px",
                       fontWeight: 600, 
@@ -205,8 +207,9 @@ export default function Home() {
                     style={{ 
                       display: "flex", 
                       alignItems: "center", 
-                      gap: "8px", 
-                      padding: "12px 24px", 
+                      gap: "6px", 
+                      padding: "10px 16px", 
+                      flexShrink: 0, 
                       borderRadius: "999px", 
                       fontSize: "14px",
                       fontWeight: 600, 
@@ -242,7 +245,7 @@ export default function Home() {
                   const isBelowMin = numericQty > 0 && numericQty < minQty;
 
                   return (
-                    <div className="glass-card animate-fade-in" style={{ maxWidth: "520px", margin: "0 auto", padding: "32px", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", textAlign: "center" }}>
+                    <div className="glass-card animate-fade-in" style={{ maxWidth: "520px", width: "100%", margin: "0 auto", padding: "24px", display: "flex", flexDirection: "column", alignItems: "center", gap: "20px", textAlign: "center" }}>
                       {/* Large Product Image */}
                       <div style={{ width: "160px", height: "160px", borderRadius: "24px", background: "linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.15) 100%)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", fontSize: "72px", flexShrink: 0, border: "1px solid var(--glass-border)", boxShadow: "0 8px 32px rgba(79, 70, 229, 0.15)" }}>
                         {isUrl(product.icon) ? (
@@ -372,56 +375,62 @@ export default function Home() {
           </div>
 
           <h2 className="section-title">Customer Reviews</h2>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap", marginTop: "32px" }}>
-            {/* Review 1 */}
-            <div className="glass-card" style={{ padding: "12px", width: "220px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
-                {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
-              </div>
-              <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
-                &ldquo;Faceless pages ke liye best bundle hai.&rdquo;
-              </p>
-              <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Aman Yadav</div>
-            </div>
-            {/* Review 2 (Shifted Up) */}
-            <div className="glass-card" style={{ padding: "12px", width: "220px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
-                {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
-              </div>
-              <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
-                &ldquo;Likes aur views bohot jaldi badh gaye, highly recommend!&rdquo;
-              </p>
-              <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Riya Sharma</div>
-            </div>
-            {/* Review 3 */}
-            <div className="glass-card" style={{ padding: "12px", width: "220px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
-                {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
-              </div>
-              <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
-                &ldquo;Bohot hi kamaal ka engagement mila!&rdquo;
-              </p>
-              <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Neha Patel</div>
-            </div>
-            {/* Review 4 */}
-            <div className="glass-card" style={{ padding: "12px", width: "220px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
-                {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
-              </div>
-              <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
-                &ldquo;Ek ek paisa vasool product hai.&rdquo;
-              </p>
-              <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Rohan Verma</div>
-            </div>
-            {/* Review 5 */}
-            <div className="glass-card" style={{ padding: "12px", width: "220px", display: "flex", flexDirection: "column", gap: "6px" }}>
-              <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
-                {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
-              </div>
-              <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
-                &ldquo;Followers bohot fast increase ho gaye, trusted service hai!&rdquo;
-              </p>
-              <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Vikram Singh</div>
+          <div className="marquee-wrapper" style={{ marginTop: "32px" }}>
+            <div className="marquee-content">
+              {[1, 2].map((group) => (
+                <React.Fragment key={group}>
+                  {/* Review 1 */}
+                  <div className="glass-card" style={{ padding: "16px", flex: "0 0 260px", width: "260px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
+                      {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
+                    </div>
+                    <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
+                      &ldquo;Faceless pages ke liye best bundle hai.&rdquo;
+                    </p>
+                    <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Aman Yadav</div>
+                  </div>
+                  {/* Review 2 */}
+                  <div className="glass-card" style={{ padding: "16px", flex: "0 0 260px", width: "260px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
+                      {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
+                    </div>
+                    <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
+                      &ldquo;Likes aur views bohot jaldi badh gaye, highly recommend!&rdquo;
+                    </p>
+                    <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Riya Sharma</div>
+                  </div>
+                  {/* Review 3 */}
+                  <div className="glass-card" style={{ padding: "16px", flex: "0 0 260px", width: "260px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
+                      {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
+                    </div>
+                    <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
+                      &ldquo;Bohot hi kamaal ka engagement mila!&rdquo;
+                    </p>
+                    <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Neha Patel</div>
+                  </div>
+                  {/* Review 4 */}
+                  <div className="glass-card" style={{ padding: "16px", flex: "0 0 260px", width: "260px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
+                      {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
+                    </div>
+                    <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
+                      &ldquo;Ek ek paisa vasool product hai.&rdquo;
+                    </p>
+                    <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Rohan Verma</div>
+                  </div>
+                  {/* Review 5 */}
+                  <div className="glass-card" style={{ padding: "16px", flex: "0 0 260px", width: "260px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                    <div style={{ display: "flex", gap: "4px", color: "#fbbf24" }}>
+                      {"★★★★★".split("").map((s, idx) => <span key={idx} style={{ fontSize: "14px" }}>★</span>)}
+                    </div>
+                    <p style={{ fontStyle: "italic", fontSize: "13px", color: "var(--text-primary)", fontWeight: 500, margin: 0 }}>
+                      &ldquo;Followers bohot fast increase ho gaye, trusted service hai!&rdquo;
+                    </p>
+                    <div style={{ fontSize: "11px", color: "var(--text-muted)", fontWeight: 600 }}>— Vikram Singh</div>
+                  </div>
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </section>

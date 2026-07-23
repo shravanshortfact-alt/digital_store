@@ -1,14 +1,13 @@
 import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
 import type { NextConfig } from "next";
 
-(async () => {
+const nextConfig: NextConfig = {
+  allowedDevOrigins: ['100.101.251.55', '192.168.1.34'],
+};
+
+export default async () => {
   if (process.env.NODE_ENV === "development") {
     await setupDevPlatform();
   }
-})();
-
-const nextConfig: NextConfig = {
-  /* config options here */
+  return nextConfig;
 };
-
-export default nextConfig;
