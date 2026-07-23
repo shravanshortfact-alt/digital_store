@@ -1184,9 +1184,6 @@ export default function AdminDashboard() {
               >
                 <option value="digital_file">📁 Digital File (e.g. drive / download link)</option>
                 <option value="reels_bundle">🎬 Reels Bundle (with video samples)</option>
-                <option value="instagram_followers">👥 Instagram Followers</option>
-                <option value="instagram_likes">❤️ Instagram Likes</option>
-                <option value="instagram_views">👁️ Instagram Views</option>
               </select>
             </div>
 
@@ -1278,74 +1275,6 @@ export default function AdminDashboard() {
               />
             </div>
 
-            {productType === "instagram" && (
-              <div style={{ border: "1px solid var(--glass-border)", padding: "16px", borderRadius: "12px", backgroundColor: "rgba(79, 70, 229, 0.03)", marginBottom: "16px" }}>
-                <div className="form-row-2">
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label htmlFor="insta-service-type">Instagram Service Type</label>
-                    <select
-                      id="insta-service-type"
-                      value={instagramServiceType}
-                      onChange={(e) => setInstagramServiceType(e.target.value as "followers" | "likes" | "views")}
-                      className="glass-input"
-                      style={{ appearance: "auto", background: "#ffffff" }}
-                    >
-                      <option value="followers">Followers 👥</option>
-                      <option value="likes">Likes ❤️</option>
-                      <option value="views">Views 👁️</option>
-                    </select>
-                  </div>
-                  <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label htmlFor="insta-qty">Minimum Order Quantity</label>
-                    <input
-                      type="number"
-                      id="insta-qty"
-                      value={instagramQuantity}
-                      onChange={(e) => setInstagramQuantity(e.target.value)}
-                      className="glass-input"
-                      placeholder="e.g. 100"
-                      min="1"
-                    />
-                    <span className="input-note">Customer ko kam se kam itne order karne padenge</span>
-                  </div>
-                </div>
-
-                <div className="form-group" style={{ marginTop: "12px", marginBottom: 0 }}>
-                  <label htmlFor="smm-service-id">SMM Panel Package Service ID</label>
-                  <div style={{ display: "flex", gap: "8px" }}>
-                    <input
-                      type="number"
-                      id="smm-service-id"
-                      value={smmServiceId}
-                      onChange={(e) => setSmmServiceId(e.target.value)}
-                      className="glass-input"
-                      placeholder="e.g. 30067"
-                      required={productType === "instagram"}
-                    />
-                    <button
-                      type="button"
-                      onClick={handleFetchSmmServices}
-                      className="btn-secondary"
-                      style={{ padding: "0 16px", whiteSpace: "nowrap", fontSize: "13px", height: "auto" }}
-                    >
-                      Browse SMM
-                    </button>
-                  </div>
-                  <span className="input-note">Favoritesmm service package ID linked to this product (e.g. 101 or 30067)</span>
-                </div>
-
-                {/* Live Price Preview */}
-                {newPrice && instagramQuantity && (
-                  <div style={{ marginTop: "12px", padding: "10px 14px", backgroundColor: "rgba(79, 70, 229, 0.06)", borderRadius: "8px", fontSize: "13px", fontWeight: 600, color: "var(--accent-primary)", display: "flex", alignItems: "center", gap: "8px" }}>
-                    <span>💡</span>
-                    <span>
-                      {parseInt(instagramQuantity)} {instagramServiceType} = ₹{(parseFloat(newPrice) * parseInt(instagramQuantity)).toFixed(2)}
-                      {' '}(₹{newPrice}/unit × {instagramQuantity} min qty)
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
 
             {productType === "bundle" && (
               <div className="form-group">
