@@ -402,8 +402,8 @@ export default function AdminDashboard() {
     setProductMessage("");
 
     try {
-      let endpoint = "/api/admin/bulk-transactions";
-      let options: RequestInit = {
+      const endpoint = "/api/admin/bulk-transactions";
+      const options: RequestInit = {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
