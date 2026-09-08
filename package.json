@@ -5,8 +5,9 @@
   "scripts": {
     "postinstall": "node scripts/patch-next-async-hooks.mjs",
     "prebuild": "node scripts/patch-next-async-hooks.mjs",
+    "dev": "next dev",
     "pages:build": "npx @cloudflare/next-on-pages@1 && node scripts/patch-next-async-hooks.mjs",
-    "build": "next build",
+    "build": "npx @cloudflare/next-on-pages@1 && node scripts/patch-next-async-hooks.mjs",
     "start": "next start",
     "lint": "eslint"
   },
