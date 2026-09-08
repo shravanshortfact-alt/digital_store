@@ -24,27 +24,7 @@ export async function GET(request: Request) {
 
     const db = context.env.DB;
 
-    // Run dynamic schema migrations for SMM features
-    try {
-      await db.prepare("ALTER TABLE products ADD COLUMN smm_service_id INTEGER DEFAULT NULL").run();
-    } catch (e) {}
-    try {
-      await db.prepare("ALTER TABLE transactions ADD COLUMN smm_order_id INTEGER DEFAULT NULL").run();
-    } catch (e) {}
-    try {
-      await db.prepare("ALTER TABLE transactions ADD COLUMN smm_order_status TEXT DEFAULT NULL").run();
-    } catch (e) {}
-    try {
-      await db.prepare("ALTER TABLE transactions ADD COLUMN smm_order_error TEXT DEFAULT NULL").run();
-    } catch (e) {}
-    try {
-      await db.prepare("ALTER TABLE transactions ADD COLUMN instagram_link TEXT DEFAULT NULL").run();
-    } catch (e) {}
-    try {
-      await db.prepare("ALTER TABLE transactions ADD COLUMN instagram_quantity INTEGER DEFAULT NULL").run();
-    } catch (e) {}
-
-    // Query transactions with a JOIN to get the product title and Instagram details
+    // Query transactions with a JOIN to get the product title and details
     const { results } = await db
       .prepare(`
         SELECT 
@@ -56,16 +36,8 @@ export async function GET(request: Request) {
           t.status, 
           t.coupon_code,
           t.created_at, 
-          t.instagram_link,
-          t.instagram_quantity,
-          t.smm_order_id,
-          t.smm_order_status,
-          t.smm_order_error,
           p.title as product_title,
-          p.product_type,
-          p.instagram_quantity as base_quantity,
-          p.instagram_service_type,
-          p.smm_service_id
+          p.product_type
         FROM transactions t
         LEFT JOIN products p ON t.product_id = p.id
         ORDER BY t.created_at DESC
@@ -79,5 +51,44 @@ export async function GET(request: Request) {
       { error: "Internal server error occurred." },
       { status: 500 }
     );
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const authHeader = request.headers.get("Authorization");
+    const context = getRequestContext();
+    
+    if (!context || !context.env || !context.env.DB) {
+      return Response.json({ error: "Database binding error." }, { status: 500 });
+    }
+
+    const adminPassword = context.env.ADMIN_PASSWORD || config.adminPassword;
+
+    if (!authHeader || authHeader !== adminPassword) {
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const { id, ids } = (await request.json()) as { id?: string; ids?: string[] };
+    const db = context.env.DB;
+
+    if (id) {
+      await db.prepare("DELETE FROM transactions WHERE id = ?").bind(id).run();
+      return Response.json({ success: true, message: `Transaction deleted successfully.` });
+    }
+
+    if (ids && Array.isArray(ids) && ids.length > 0) {
+      let deletedCount = 0;
+      for (const targetId of ids) {
+        await db.prepare("DELETE FROM transactions WHERE id = ?").bind(targetId).run();
+        deletedCount++;
+      }
+      return Response.json({ success: true, deletedCount, message: `${deletedCount} transaction(s) deleted.` });
+    }
+
+    return Response.json({ error: "Transaction ID or IDs array is required." }, { status: 400 });
+  } catch (error: any) {
+    console.error("Error deleting transaction(s):", error);
+    return Response.json({ error: error.message || "Internal server error" }, { status: 500 });
   }
 }
