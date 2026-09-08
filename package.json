@@ -6,26 +6,26 @@
     "postinstall": "node scripts/patch-next-async-hooks.mjs",
     "prebuild": "node scripts/patch-next-async-hooks.mjs",
     "pages:build": "npx @cloudflare/next-on-pages@1 && node scripts/patch-next-async-hooks.mjs",
-    "build": "npx @cloudflare/next-on-pages@1 && node scripts/patch-next-async-hooks.mjs",
-    "next-build": "next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
-    "@cloudflare/next-on-pages": "^1.13.16",
     "@react-email/render": "^2.0.9",
     "next": "15.5.2",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "resend": "^6.14.0",
-    "wrangler": "^4.103.0"
+    "resend": "^6.14.0"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.13.16",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vercel": "^59.11.7",
+    "wrangler": "^4.103.0"
   }
 }
