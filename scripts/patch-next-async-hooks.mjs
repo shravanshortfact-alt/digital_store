@@ -13,16 +13,20 @@ function extensionOf(filePath) {
 }
 
 function patchFile(filePath) {
-  const source = readFileSync(filePath, "utf8");
-  const patched = source
-    .replaceAll('from "async_hooks"', 'from "node:async_hooks"')
-    .replaceAll("from 'async_hooks'", "from 'node:async_hooks'")
-    .replaceAll('from"async_hooks"', 'from"node:async_hooks"')
-    .replaceAll("from'async_hooks'", "from'node:async_hooks'");
+  try {
+    const source = readFileSync(filePath, "utf8");
+    const patched = source
+      .replaceAll('from "async_hooks"', 'from "node:async_hooks"')
+      .replaceAll("from 'async_hooks'", "from 'node:async_hooks'")
+      .replaceAll('from"async_hooks"', 'from"node:async_hooks"')
+      .replaceAll("from'async_hooks'", "from'node:async_hooks'");
 
-  if (patched !== source) {
-    writeFileSync(filePath, patched);
-    return 1;
+    if (patched !== source) {
+      writeFileSync(filePath, patched);
+      return 1;
+    }
+  } catch (err) {
+    // Ignore unreadable files
   }
 
   return 0;
@@ -52,7 +56,12 @@ let count = 0;
 
 for (const target of targets) {
   if (existsSync(target)) {
-    count += patchDirectory(target);
+    const stat = statSync(target);
+    if (stat.isDirectory()) {
+      count += patchDirectory(target);
+    } else if (stat.isFile()) {
+      count += patchFile(target);
+    }
   }
 }
 
