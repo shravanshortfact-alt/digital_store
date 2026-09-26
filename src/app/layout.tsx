@@ -1,12 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Outfit } from "next/font/google";
 import "./globals.css";
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-sans",
-});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -31,8 +24,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={outfit.variable}>
-      <body style={{ fontFamily: "var(--font-sans)" }}>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+      </head>
+      <body style={{ fontFamily: "'Outfit', system-ui, -apple-system, sans-serif" }}>
         <div className="glow-bg">
           <div className="glow-orb glow-orb-1" />
           <div className="glow-orb glow-orb-2" />
