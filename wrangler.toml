@@ -9,3 +9,6 @@ binding = "DB"
 database_name = "shravan-store"
 database_id = "df585d2d-61cb-479f-b850-bf3f6ba5afb9"
 
+[vars]
+NODE_VERSION = "20"
+
