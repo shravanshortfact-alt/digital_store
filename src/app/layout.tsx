@@ -16,8 +16,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "1000+ Premium HD Reels Bundle | Instant Download",
+  title: "Shravana Store",
   description: "Get instant access to 1000+ premium, high-converting HD reels to grow your social media presence. Kickstart your viral growth today!",
+  openGraph: {
+    title: "Shravana Store",
+    description: "Get instant access to 1000+ premium, high-converting HD reels to grow your social media presence. Kickstart your viral growth today!",
+    siteName: "Shravana Store",
+  },
 };
 
 export default function RootLayout({
