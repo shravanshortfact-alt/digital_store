@@ -2,7 +2,7 @@ import { setupDevPlatform } from "@cloudflare/next-on-pages/next-dev";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  allowedDevOrigins: ['100.101.251.55', '192.168.1.34'],
+  allowedDevOrigins: ["100.101.251.55", "192.168.1.34"],
   eslint: {
     ignoreDuringBuilds: true,
   },
